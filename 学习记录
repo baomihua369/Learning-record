@@ -1,0 +1,31 @@
+2021.08.04
+1.Bitmap(位图)
+	Bitmap，即位图。它本质上就是一张图片的内容在内存中的表达形式。是通过很多ARGB像素点表示一张图片
+	Bitmap.Config:ARGB_8888：有透明值，4字节像素点（最高画质）；ARGB_4444：有透明值，2字节像素点（差画质）；RGB_565：无透明值，R:G:B=5：6：5;ALPHA_8：只储存透明值；一般选择ARGB_8888或RGB_565；
+	Bitmap的压缩存储：将Bitmap对象进行持久化储存为一张本地图片，需要对Bitmap进行压缩，比如GIF、JPEG、BMP、PNG和WebP等是不同的图片压缩格式（不同的图片压缩格式简称为不同的图片格式）；
+		有损压缩：保持颜色的逐渐变化，删除图像中颜色的突然变化。
+		无损压缩：首先会确定图像中哪些区域是相同的，哪些是不同的。包括了重复数据的区域就可以被压缩，只需要记录该区域的起始点即可。
+	色深：指每一个像素会使用多少bit来存储ARGB值，是图片的一种自身属性，衡量一张图片的色彩丰富程度；Bitmap.Config说的就是色深，有经典的色深8-bit , 16-bit , 24-bit(?) , 32-bit
+	位深：指Bitmap压缩时存储每个像素所用的bit数，主要用于存储，位深一般小于或等于色深。
+	压缩格式：
+		Gif:无损压缩，50%左右压缩率；
+		BMP:标准图形格式，没压缩；
+		PNG(设计目的是代替Gif):无损压缩,位深32位；
+		JPEG:有损压缩格式，位深24位
+		WebP：集成了PNG、JPEG和Gif的所有功能，有损和无损的效率都最高，但是花费的时间更高；
+	Bitmap的加载方法:
+		decodeFile:	 从本地图片文件中
+		decodeResource:	 从项目资源文件中
+		decodeStream:	 从流对象(可以是网络输入流对象或本地文件输入流对象)中
+		decodeByteArray: 从字节序列中
+	Bitmap的压缩方法：
+		compress(Bitmap.CompressFormat format, int quality, OutputStream stream)
+		format参数表示压缩存储的格式(JPEG,PNG,WEBP); quality表示压缩率 0~100，100表示未压缩，30表示压缩到30%(该参数在format是无损压缩时无效); stream就是希望输出到某个位置的输出流对象
+	BitmapFactory.Options类
+		代表对Bitmap对象的属性设置
+			
+2.帧布局
+3.Paint
+4.BitmapFactory
+5.AndroidDeveloper
+5.onTouch事件，return true或false的意义

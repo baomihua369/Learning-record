@@ -1,0 +1,8 @@
+2021.08.04
+错误：
+
+
+在cameraDemo中 使用Camera2API时，遇到下面的报错，因为CameraDevice.createCaptureSession(List,CallBack)中未添加相应的Surface导致；
+java.lang.IllegalArgumentException: CaptureRequest contains unconfigured Input/Output Surface!
+
+

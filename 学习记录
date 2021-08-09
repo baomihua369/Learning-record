@@ -1,4 +1,4 @@
-2021.08.04     @@@@@@@@
+2021.08.04
 1.Bitmap(位图)
 	Bitmap，即位图。它本质上就是一张图片的内容在内存中的表达形式。是通过很多ARGB像素点表示一张图片
 	Bitmap.Config:ARGB_8888：有透明值，4字节像素点（最高画质）；ARGB_4444：有透明值，2字节像素点（差画质）；RGB_565：无透明值，R:G:B=5：6：5;ALPHA_8：只储存透明值；一般选择ARGB_8888或RGB_565；
@@ -26,6 +26,133 @@
 			
 2.帧布局
 3.Paint
+	Paint.style
+	Paint.Cap
+	Paint.join
+	Paint.Align
+	
 4.BitmapFactory
 5.AndroidDeveloper
 5.onTouch事件，return true或false的意义
+6.在ViewGroup和其子类中可以使用getChildCount()来获取子view的个数(如何计算不清楚百度)
+7. 在ViewGroup和其子类中可以使用public View get ChildAt(int index)，根据位置返回一个View
+8.Android中的View：getLeft()、getTop()、getRight()、getBottom()
+	对比父容器有多少距离的
+9.自定义ViewGroup
+	ViewGroup中的onLayout()是抽象方法，他的子类比如线性布局等，都要重写onLayout()方法；
+	1.onMeasure()
+ 	2.onLayout()中；使用layout(int left, int top, int right, int bottom)给子布局分配位置
+10.Scroller类中，有getCurrX()和getCurrY()方法，用来返回两个int值，这两个值分别表示滑动位移的X值和Y值，
+	Scroller只是个计算器，提供插值计算，让滚动过程具有动画属性，但它并不是UI，也不是辅助UI滑动，反而是单纯地为滑动提供计算。
+	其中的scrollerTo()和scrollerBy()可以让控件移动。
+
+11.View中的computeScroll()的方法，computeScroll的作用是计算ViewGroup如何滑动，而computeScroll是通过draw来调用的。
+
+
+2021.08.05
+1.LayoutInflater.from(context).inflate()
+....
+
+2021.08.06
+1.Android MVP模型
+	1.Model：处理应用程序的数据部分
+	2.Presenter：充当连接模型和视图的桥梁
+	3.View：负责按照演示者的指示使用相关数据布置视图
+	注：View和Model不直接通信
+	
+2.Android MVP架构
+	当View向Presenter下发来自用户的操作后，P向Model更新数据，经过M处理数据，向P通知数据变化，最后P向View发送更新UI。
+
+3.Android MVP准则
+	View
+	    Activity,Fragment和CustomView（自定义视图）充当应用的View部分
+	Presenter
+	    Presenter负责侦听用户交互（在View上）和模型更新（数据库，API），以及更新Model和View
+	Model
+	    通常View和Presenter是一对一的关系，一个Presenter类一次管理一个View
+	Interface
+	    需要定义和实现接口以在View-Presenter 和 Presenter-Model之间进行通信
+	Presenter任务
+	    负责处理所有后台任务，在Presenter中避免使用Android SDK类	
+	引用
+	    Model和View类不能互相引用
+
+4.Android MVP 应用程序项目结构
+	项目里包含3个接口文件
+	创建一个Activity
+
+
+5.嵌套接口
+	指接口可以嵌套在类或其他的接口中，当实现某个接口时，并不需要实现嵌套在其内的任何接口，而被private修饰的接口不能在定义他的类之外被实现，在一个普通类或抽象类中可以定义一个private的接口，而在接口中定义的接口不能加任何的修饰符，默认已有public
+
+
+6.向上转型和向下转型
+	父类引用指向子类对象，将子类对象变为父类对象（向上转型），父类对象可以是接口，向上转型时，父类会遗失除了与父类对象子类对象共有的方法，
+	子类引用不能指向父类对象。
+	向下转型需要考虑安全问题，如果一个父类引用指向一个子类对象，那么这个父类引用向下转型成为子类对象时，并不会有安全问题，向下转型时，会重新获得子类的特有方法
+
+7.ConstraintLayout布局
+	
+
+2021.8.9
+1.Paint
+	
+	Paint.style(.FILL   .FILL_AND_STROKE   .STROKE) ， 填充内部，填充内部和描边，描边
+	Paint.Cap(.BUTT   .ROUND   .SQUARE)  //填充方式  ，
+	Paint.join(.BEVEL   .MITER   .ROUND),//拐角处形状，斜角，斜接，圆角
+	Paint.Align(.CENTER   .LEFT   .RIGHT),//内容  居中，中线左对齐，中线右对齐
+	setStrokeCap(Paint.Cap.BUTT);
+	setStrokeJoin(Paint.Join.MITER);
+
+	void  setARGB(int a, int r, int g, int b)  设置Paint对象颜色，参数一为alpha透明通道
+	void  setAlpha(int a)  设置alpha不透明度，范围为0~255
+	void  setAntiAlias(boolean aa) 设置抗锯齿
+	void  setColor(int color)  //设置颜色，这里Android内部定义的有Color类包含了一些常见颜色定义
+	void  setFakeBoldText(boolean fakeBoldText)  //设置伪粗体文本
+	void  setLinearText(boolean linearText)  //设置线性文本
+	PathEffect  setPathEffect(PathEffect effect)  //设置路径效果
+	Rasterizer  setRasterizer(Rasterizer rasterizer) //设置光栅化
+	Shader  setShader(Shader shader)  //设置阴影 
+	void  setTextAlign(Paint.Align align)  //设置文本对齐
+	void  setTextScaleX(float scaleX)  //设置文本缩放倍数，1.0f为原始
+	void  setTextSize(float textSize)  //设置字体大小
+	Typeface  setTypeface(Typeface typeface)  //设置字体，Typeface包含了字体的类型，粗细，还有倾斜、颜色等。
+	void  setUnderlineText(boolean underlineText)  //设置下划线
+	Paint.reset() 重置画笔
+	Paint.setFlags(int flags) 设置标志，锯齿下划线等等
+	Paint.setStrikeThruText(boolean strikeThruText) //设置文本删除线
+2.直接new接口时，发生了什么事！（匿名内部类）
+3.Observable,是观察者的典型应用，android里是一个泛型的抽象类，表示一个观察者对象，提供了观察者注册，反注册，清空三个方法
+Observable的直接继承者有两个：DataSetObservable和ContentObservable,他们功能类似，在很多Adapter中都可以用到DataSetObservable(比如BaseAdapter)
+	
+4.DataSetObservable使用DataSetObserver实例化了Observable。 DataSetObservable表示了一个数据集对象的观察者
+	
+	使用方法：例：
+	在一个继承了ArrayList的类A中，实例化DataSetObservable对象，仿照BaseAdapt中的方法，分别实现
+			registerDataSetObserver(DataSetObserver observer),
+			unregisterDataSetObserver(DataSetObserver observer), 
+			notifyDataSetChanged(),
+			notifyDataSetInvalidated()方法
+	在需要的地方，实例化一个DataSetObserver对象，重写他的onchanged()方法
+	实例化A时，将DataSetObserver对象传进A方法的registerDataSetObserver(..)方法中，当A对象List中的数据发生变化后，要去调用list.notifyDataSetChanged()方法，这样DataSetObserver对象的onchanged()方法就可以监听到改变了，在其中进行处理数据。
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+。
